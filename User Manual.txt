@@ -1,0 +1,6 @@
+This is a general set of instructions to be followed while evaluating the programs.
+1) Do not displace any file from the folder as some files are meant to be in the same directory to work 
+2) You can change the process/equation parameters accordingly as in the sections that are defined as "Defining Constants"
+3) I have attached a folder named 'html' which contains the html version of the program outputs which can be used to view the output or to view the code
+4) Do not remove any PNG files from the 'html' folder as they are supposed to be in the same directory to be published in the html
+5) I have not suppressed the Warning Messages in some codes, they will also appear in the output, you may ignore them 
