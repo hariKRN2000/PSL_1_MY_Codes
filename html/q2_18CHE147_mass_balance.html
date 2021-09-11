@@ -1,0 +1,182 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Question 2 Harikrishnan R N, 18CHE147</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-11-22"><meta name="DC.source" content="q2_18CHE147_mass_balance.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Question 2 Harikrishnan R N, 18CHE147</h1><!--introduction--><p>Here I have shown how to code for the Stead-State Material Balance on a Separation Train.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Defining the Constants :</a></li><li><a href="#2">Solving for the Feed Column :</a></li><li><a href="#3">Solving for Second Column :</a></li><li><a href="#4">Solving for Third Column :</a></li><li><a href="#5">Displaying Results :</a></li></ul></div><h2 id="1">Defining the Constants :</h2><p>Here I have defined the constant compositions that are used to solve the equations of Mass Balance :</p><pre class="codeinput"><span class="comment">%The row vectors are in the order : D1,B1,D2,B2 are the respective</span>
+<span class="comment">%compositions according to the question</span>
+xf1 = [ 15 ; 25 ; 40 ; 20 ]/100 ;
+xd1 = [ 7 ; 4 ; 54 ; 35 ]/100 ;
+xb1 = [ 18 ; 24 ;  42 ; 16 ]/100 ;
+xd2 = [ 15 ; 10 ; 54 ; 21 ]/100 ;
+xb2 = [ 24 ; 65 ; 10 ; 1 ]/100 ;
+F = 70 ;        <span class="comment">% mol/min, Feed Flowrate</span>
+</pre><h2 id="2">Solving for the Feed Column :</h2><p>Here I will find the molar flowrates of each species :</p><pre class="codeinput"><span class="comment">%Solving the System of Linear Equations defined below :</span>
+lin_sys = [ xd1 xb1 xd2 xb2 ] ;
+flow_sol = F*inv(lin_sys)*xf1 ;
+d1 = flow_sol(1) ; b1 = flow_sol(2);
+d2 = flow_sol(3) ; b2 = flow_sol(4);
+mol_flow_rates = [d1;b1;d2;b2];
+d = d1+d2 ; b = b1+b2 ;
+</pre><h2 id="3">Solving for Second Column :</h2><p>Here I will find the compositions of each species in #2 column :</p><pre class="codeinput"><span class="comment">%Defining the funcion to solve the equations :</span>
+F1 = @(x) [ x(1)*(d1+b1) - xd1(1)*d1 - xb1(1)*b1;
+            x(2)*(d1+b1) - xd1(2)*d1 - xb1(2)*b1;
+            x(3)*(d1+b1) - xd1(3)*d1 - xb1(3)*b1;
+            x(4)*(d1+b1) - xd1(4)*d1 - xb1(4)*b1; ] ;
+x0 = [ 0.1 ; 0.1 ; 0.1 ; 0.1] ;
+options = optimoptions(<span class="string">'fsolve'</span>,<span class="string">'Display'</span>,<span class="string">'None'</span>);
+xd = fsolve(F1,x0,options) ;
+</pre><h2 id="4">Solving for Third Column :</h2><p>Here I will find the compositions of each species in #3 column :</p><pre class="codeinput"><span class="comment">%Defining the funcion to solve the equations :</span>
+F1 = @(x) [ x(1)*(d2+b2) - xd2(1)*d2 - xb2(1)*b2;
+            x(2)*(d2+b2) - xd2(2)*d2 - xb2(2)*b2;
+            x(3)*(d2+b2) - xd2(3)*d2 - xb2(3)*b2;
+            x(4)*(d2+b2) - xd2(4)*d2 - xb2(4)*b2; ] ;
+x0 = [ 0.1 ; 0.1 ; 0.1 ; 0.1] ;
+xb = fsolve(F1,x0,options) ;
+</pre><h2 id="5">Displaying Results :</h2><pre class="codeinput">streams = [<span class="string">'D1'</span>;<span class="string">'B1'</span>;<span class="string">'D2'</span>;<span class="string">'B2'</span> ] ;
+tab1 = table(streams,[mol_flow_rates],<span class="string">'VariableNames'</span>,{<span class="string">'Stream'</span>,<span class="string">'Molar Flowrate, mol/min'</span>});
+species = [<span class="string">"Xylene"</span>;<span class="string">"Styrene"</span>;<span class="string">"Toluene"</span>;<span class="string">"Benzene"</span>];
+tab2 = table(species,xd,xb,<span class="string">'VariableNames'</span>,{<span class="string">'Compound'</span>,<span class="string">'Stream D'</span>,<span class="string">'Stream B'</span>});
+disp(<span class="string">" Below is the Flowrates of each stream : "</span>);
+disp(tab1);
+disp(<span class="string">" Below is the Composition of each stream : "</span>);
+disp(tab2);
+</pre><pre class="codeoutput"> Below is the Flowrates of each stream : 
+    Stream    Molar Flowrate, mol/min
+    ______    _______________________
+
+      D1               26.25         
+      B1                17.5         
+      D2                8.75         
+      B2                17.5         
+
+ Below is the Composition of each stream : 
+    Compound     Stream D    Stream B
+    _________    ________    ________
+
+    "Xylene"      0.114          0.21
+    "Styrene"      0.12       0.46667
+    "Toluene"     0.492       0.24667
+    "Benzene"     0.274      0.076667
+
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Question 2 Harikrishnan R N, 18CHE147
+% Here I have shown how to code for the Stead-State Material Balance on a
+% Separation Train. 
+%% Defining the Constants : 
+% Here I have defined the constant compositions that are used to solve the
+% equations of Mass Balance : 
+%The row vectors are in the order : D1,B1,D2,B2 are the respective
+%compositions according to the question
+xf1 = [ 15 ; 25 ; 40 ; 20 ]/100 ; 
+xd1 = [ 7 ; 4 ; 54 ; 35 ]/100 ; 
+xb1 = [ 18 ; 24 ;  42 ; 16 ]/100 ; 
+xd2 = [ 15 ; 10 ; 54 ; 21 ]/100 ; 
+xb2 = [ 24 ; 65 ; 10 ; 1 ]/100 ; 
+F = 70 ;        % mol/min, Feed Flowrate 
+%% Solving for the Feed Column : 
+% Here I will find the molar flowrates of each species : 
+%Solving the System of Linear Equations defined below :
+lin_sys = [ xd1 xb1 xd2 xb2 ] ;
+flow_sol = F*inv(lin_sys)*xf1 ; 
+d1 = flow_sol(1) ; b1 = flow_sol(2);
+d2 = flow_sol(3) ; b2 = flow_sol(4);
+mol_flow_rates = [d1;b1;d2;b2];
+d = d1+d2 ; b = b1+b2 ; 
+%% Solving for Second Column : 
+% Here I will find the compositions of each species in #2 column :
+%Defining the funcion to solve the equations : 
+F1 = @(x) [ x(1)*(d1+b1) - xd1(1)*d1 - xb1(1)*b1;
+            x(2)*(d1+b1) - xd1(2)*d1 - xb1(2)*b1;
+            x(3)*(d1+b1) - xd1(3)*d1 - xb1(3)*b1;
+            x(4)*(d1+b1) - xd1(4)*d1 - xb1(4)*b1; ] ;
+x0 = [ 0.1 ; 0.1 ; 0.1 ; 0.1] ; 
+options = optimoptions('fsolve','Display','None');
+xd = fsolve(F1,x0,options) ; 
+%% Solving for Third Column : 
+% Here I will find the compositions of each species in #3 column :
+%Defining the funcion to solve the equations : 
+F1 = @(x) [ x(1)*(d2+b2) - xd2(1)*d2 - xb2(1)*b2;
+            x(2)*(d2+b2) - xd2(2)*d2 - xb2(2)*b2;
+            x(3)*(d2+b2) - xd2(3)*d2 - xb2(3)*b2;
+            x(4)*(d2+b2) - xd2(4)*d2 - xb2(4)*b2; ] ;
+x0 = [ 0.1 ; 0.1 ; 0.1 ; 0.1] ; 
+xb = fsolve(F1,x0,options) ;
+%% Displaying Results : 
+streams = ['D1';'B1';'D2';'B2' ] ;
+tab1 = table(streams,[mol_flow_rates],'VariableNames',{'Stream','Molar Flowrate, mol/min'});
+species = ["Xylene";"Styrene";"Toluene";"Benzene"];
+tab2 = table(species,xd,xb,'VariableNames',{'Compound','Stream D','Stream B'});
+disp(" Below is the Flowrates of each stream : ");
+disp(tab1); 
+disp(" Below is the Composition of each stream : ");
+disp(tab2);
+
+
+##### SOURCE END #####
+--></body></html>

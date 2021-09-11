@@ -1,0 +1,417 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Question 3     Harikrishnan R N, 18CHE147</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-11-22"><meta name="DC.source" content="q3_18CHE147_antoine.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Question 3     Harikrishnan R N, 18CHE147</h1><!--introduction--><p>Here I have presented the code to solve question 3 of assignment</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Solving for First part:</a></li><li><a href="#2">Solving for Second part:</a></li><li><a href="#3">Solving for Third Part</a></li><li><a href="#4">Appendix 1 : Gradient Descent Function</a></li><li><a href="#5">Appendix 2: Cost Function</a></li></ul></div><h2 id="1">Solving for First part:</h2><p>We will first define the arrays of given data : y is the array with the known values of ln(P)</p><pre class="codeinput">y = [1;5;10;20;40;60;100;200;400;760] ;
+
+<span class="comment">% T is the array with the known temperature values (T in degC) ;</span>
+T = [-36.7;-19.6;-11.5;-2.6;7.6;15.4;26.1;42.2;60.6;80.1];
+<span class="comment">% There are 10 data points. To fit a polynomial, we should take care that</span>
+<span class="comment">% the polynomial is not overfitting the data.</span>
+<span class="comment">% Let the degree of polynomials vary from 1 to 10</span>
+warning(<span class="string">'off'</span>,<span class="string">'MATLAB:polyfit:PolyNotUnique'</span>)
+warning(<span class="string">'off'</span>,<span class="string">'MATLAB:polyfit:RepeatedPointsOrRescale'</span>)
+polys = zeros(6,1) ;
+disp(<span class="string">'The plots for different fits on the data : '</span>)
+hold <span class="string">on</span>
+plot(T,y)
+xlabel(<span class="string">'Temperature, deg C'</span>)
+ylabel(<span class="string">'log(P), P in mmHg'</span>)
+title(<span class="string">'Fitting of polynomials of various degrees'</span>)
+lgd = legend(<span class="string">'Given'</span>);
+lgd.Location = <span class="string">'best'</span>;
+disp([<span class="string">'Since the number of data points is small, we will fit curves till degree = 6'</span>])
+<span class="keyword">for</span> deg = 1:length(polys)
+    p = polyfit(T,y,deg);
+    y_fit = polyval(p,T);
+    R2 = 1 - (sum((y-y_fit).^2))/(sum((y-mean(y)).^2));
+    plot(T,y_fit)
+    polys(deg) = R2;
+<span class="keyword">end</span>
+hold <span class="string">off</span>
+i = 1:length(y) ;
+T1 = table((1:length(polys))',polys,<span class="string">'VariableNames'</span>,{<span class="string">'Degree'</span>,<span class="string">'R^2 Value'</span>}); disp(T1)
+disp(<span class="string">'The polynomial that fits the best is  of degree = 4'</span>)
+p_4 = polyfit(T,y,4); disp(<span class="string">'The polynomial that fits the best is shown by : '</span>)
+disp([<span class="string">'P = '</span>,num2str(p_4(1)),<span class="string">'T^4 + '</span>,num2str(p_4(2)),<span class="string">'T^3 + '</span>,num2str(p_4(3)),<span class="string">'T^2 + '</span>,num2str(p_4(4)),<span class="string">'T + '</span>,num2str(p_4(5))])
+T2 = table(i',T,y,(polyval(p_4,T)),<span class="string">'VariableNames'</span>,{<span class="string">'Index'</span>,<span class="string">'Temperature (degC)'</span>,<span class="string">'P in mmHg'</span>,<span class="string">'Predicted P in mmHg'</span>});
+disp(T2); disp(<span class="string">'It looks like 4th degree polynomial overfits the data, we can also use the 3rd degree for better predictions'</span>)
+</pre><pre class="codeoutput">The plots for different fits on the data : 
+Since the number of data points is small, we will fit curves till degree = 6
+    Degree    R^2 Value
+    ______    _________
+
+      1        0.77982 
+      2        0.98419 
+      3        0.99962 
+      4              1 
+      5              1 
+      6              1 
+
+The polynomial that fits the best is  of degree = 4
+The polynomial that fits the best is shown by : 
+P = 3.9631e-06T^4 + 0.00041312T^3 + 0.036044T^2 + 1.6062T + 24.6788
+    Index    Temperature (degC)    P in mmHg    Predicted P in mmHg
+    _____    __________________    _________    ___________________
+
+      1            -36.7                1             1.0477       
+      2            -19.6                5             4.5184       
+      3            -11.5               10             10.415       
+      4             -2.6               20             20.739       
+      5              7.6               40             39.162       
+      6             15.4               60             59.694       
+      7             26.1              100             100.34       
+      8             42.2              200             200.26       
+      9             60.6              400             399.77       
+     10             80.1              760             760.05       
+
+It looks like 4th degree polynomial overfits the data, we can also use the 3rd degree for better predictions
+</pre><img vspace="5" hspace="5" src="q3_18CHE147_antoine_01.png" alt=""> <h2 id="2">Solving for Second part:</h2><p>Predicting values of Pressure with the help of liniar regression and fitting the data to a Clausius Clapeyron equation. I have used the gradient descent algorithm by hand coding it just to get the feel of it. We can use the MATLAB funciton linfit for the same. We will first define the arrays of given data : y is the array with the known values of ln(P)</p><pre class="codeinput">p = [1;5;10;20;40;60;100;200;400;760] ;
+y = log(p) ;
+<span class="comment">% x_1 is the array with the known 1/temperature values (T in degC) ;</span>
+T = [-36.7;-19.6;-11.5;-2.6;7.6;15.4;26.1;42.2;60.6;80.1];
+x_1 = 1./(T + 273.15) ;
+<span class="comment">% Now we will define the array of weights i.e A and B in our case</span>
+beta0 = [20.1503;-4685.9579] ;
+<span class="comment">% We will define x as an array of ones and the 1/T terms :</span>
+m = ones(size(x_1));
+x = cat(2,m,x_1);
+<span class="comment">% Now we can define a prediction array predicting values of y</span>
+y_pred = x*beta0 ;
+
+<span class="comment">% Now we will use the cost function and the gradient descent algorithm :</span>
+<span class="comment">% Using multiple gradient descent more than once to increase computational</span>
+<span class="comment">% efficiency and accuracy.</span>
+disp(<span class="string">'Part 2 : Regressing the Data on Clausius Clapeyron Equation :'</span>)
+alpha_1 = 1.9 ; n_1 = 1e4 ;
+[beta_1,grad_1] = q3_grad_desc(x,y,beta0,alpha_1,n_1);
+disp(<span class="string">'Values of A and B after 1st run of gradient descent: '</span>)
+disp([<span class="string">'A = '</span>,num2str(beta_1(1))]);
+disp([<span class="string">'B = '</span>,num2str(beta_1(2))]);
+alpha_2 = 1.99 ; n_2 = 1e5 ;
+[beta_2,grad_2] = q3_grad_desc(x,y,beta0,alpha_2,n_2);
+disp(<span class="string">'Values of A and B after 2nd run of gradient descent: '</span>)
+disp([<span class="string">'A = '</span>,num2str(beta_2(1))]);
+disp([<span class="string">'B = '</span>,num2str(beta_2(2))]);
+alpha_3 = 1.99 ; n_3 = 10e6 ;
+[beta_3,grad_3] = q3_grad_desc(x,y,beta0,alpha_3,n_3);
+disp(<span class="string">'Values of A and B after 2nd run of gradient descent: '</span>)
+disp([<span class="string">'A = '</span>,num2str(beta_3(1))]);
+disp([<span class="string">'B = '</span>,num2str(beta_3(2))]);
+y_pred_new = x*beta_3 ;
+disp(<span class="string">'Here I have displayed the Given values of Pressure and Predicted values of Pressures'</span>);
+T3 = table(i',T,exp(y),exp(y_pred_new),<span class="string">'VariableNames'</span>,{<span class="string">'Index'</span>,<span class="string">'Temperature (degC)'</span>,<span class="string">'P in mmHg'</span>,<span class="string">'Predicted P in mmHg'</span>});
+disp(T3)
+R2 = 1 - (sum((y-y_pred_new).^2))/(sum((y-mean(y)).^2));
+disp([<span class="string">'The R^2 value for the fit is = '</span>,num2str(R2)]);
+</pre><pre class="codeoutput">Part 2 : Regressing the Data on Clausius Clapeyron Equation :
+Values of A and B after 1st run of gradient descent: 
+A = 20.1503
+B = -4685.9597
+Values of A and B after 2nd run of gradient descent: 
+A = 20.1503
+B = -4685.9768
+Values of A and B after 2nd run of gradient descent: 
+A = 20.1522
+B = -4686.5041
+Here I have displayed the Given values of Pressure and Predicted values of Pressures
+    Index    Temperature (degC)    P in mmHg    Predicted P in mmHg
+    _____    __________________    _________    ___________________
+
+      1            -36.7                1             1.3936       
+      2            -19.6                5             5.3049       
+      3            -11.5               10             9.4012       
+      4             -2.6               20             16.946       
+      5              7.6               40             31.797       
+      6             15.4               60              49.93       
+      7             26.1              100             89.242       
+      8             42.2              200             198.52       
+      9             60.6              400             450.44       
+     10             80.1              760             977.86       
+
+The R^2 value for the fit is = 0.9915
+</pre><h2 id="3">Solving for Third Part</h2><p>Here we have to do a non-linear regression and fit the given data in Antoinne form of equation. Here we store the given data the same way we did for linear regression y is the array with the known values of ln(P)</p><pre class="codeinput">p = [1;5;10;20;40;60;100;200;400;760] ;
+y = log(p) ;
+<span class="comment">% x_1 is the array with the known 1/temperature values (T in degC) ;</span>
+T = [-36.7;-19.6;-11.5;-2.6;7.6;15.4;26.1;42.2;60.6;80.1];
+<span class="comment">% Now we will define the array of weights i.e A and B in our case</span>
+beta0 = [20;4000;50] ;
+<span class="comment">% Here we use the nlinfit function to fit a non linear regression :</span>
+beta_nonlin = nlinfit(T,y,@(b,x) b(1) - b(2)./(x + b(3)),beta0);
+<span class="comment">% Our Prediction for Pressure</span>
+y_pred_nonlin = beta_nonlin(1) - beta_nonlin(2)./(T + beta_nonlin(3))  ;
+
+disp(<span class="string">'Part 3 : Regressing the Data on Antoine Equation :'</span>)
+disp([<span class="string">'A = '</span>,num2str(beta_nonlin(1))]);
+disp([<span class="string">'B = '</span>,num2str(beta_nonlin(2))]);
+disp([<span class="string">'C = '</span>,num2str(beta_nonlin(3))]);
+disp(<span class="string">'Here I have displayed the Given values of Pressure and Predicted values of Pressures'</span>);
+T4 = table(i',T,exp(y),exp(y_pred_nonlin),<span class="string">'VariableNames'</span>,{<span class="string">'Index'</span>,<span class="string">'Temperature (degC)'</span>,<span class="string">'P in mmHg'</span>,<span class="string">'Predicted P in mmHg'</span>});
+disp(T3)
+R2 = 1 - (sum((y-y_pred_nonlin).^2))/(sum((y-mean(y)).^2));
+disp([<span class="string">'The R^2 value for the fit is = '</span>,num2str(R2)]);
+</pre><pre class="codeoutput">Part 3 : Regressing the Data on Antoine Equation :
+A = 13.2798
+B = 1559.0637
+C = 153.8852
+Here I have displayed the Given values of Pressure and Predicted values of Pressures
+    Index    Temperature (degC)    P in mmHg    Predicted P in mmHg
+    _____    __________________    _________    ___________________
+
+      1            -36.7                1             1.3936       
+      2            -19.6                5             5.3049       
+      3            -11.5               10             9.4012       
+      4             -2.6               20             16.946       
+      5              7.6               40             31.797       
+      6             15.4               60              49.93       
+      7             26.1              100             89.242       
+      8             42.2              200             198.52       
+      9             60.6              400             450.44       
+     10             80.1              760             977.86       
+
+The R^2 value for the fit is = 0.99969
+</pre><h2 id="4">Appendix 1 : Gradient Descent Function</h2><p>Here I have showed how I have defined the function that can perform the Gradient Descent that is used to determine the Parameters in the Clausius Clapeyron Equation The function below has been "commented" for some reasons Uncomment and save it in a file to use</p><pre class="codeinput"><span class="comment">%function [beta,q3_grad_desc] = q3_grad_desc(X,y,beta0,alpha,n)</span>
+<span class="comment">% The following function does the gradient descent needed to do the</span>
+<span class="comment">% regression</span>
+<span class="comment">% alpha is the learning rate parameter</span>
+<span class="comment">% n is the number of iterations needed</span>
+<span class="comment">% Initialize some useful values</span>
+<span class="comment">%m = length(y); % number of training examples</span>
+<span class="comment">%q3_grad_desc = zeros(n, 1);</span>
+
+<span class="comment">%for iter = 1:n</span>
+ <span class="comment">%   delta = ((X*beta0)-y)' * X;</span>
+  <span class="comment">%  temp = beta0 - (alpha/m)*delta';</span>
+   <span class="comment">% beta0 = temp;</span>
+    <span class="comment">%q3_grad_desc(iter) = q3_cost(X, y, beta0);</span>
+<span class="comment">%end</span>
+<span class="comment">%beta = beta0;</span>
+<span class="comment">%end</span>
+</pre><h2 id="5">Appendix 2: Cost Function</h2><p>Here I have attached the functionn that is used to compute the cost of the function as Mean Squared Error. The function below has been "commented" for some reasons Uncomment and save it in a file to use</p><pre class="codeinput"><span class="comment">%function q3_cost = q3_cost(X,y,beta0)</span>
+<span class="comment">% This function computes cost function</span>
+<span class="comment">% Initialize some useful values</span>
+<span class="comment">%m = length(y); % number of training examples</span>
+<span class="comment">%predictions = X*beta0;</span>
+<span class="comment">%sqrErrors = (predictions - y).^2 ;</span>
+<span class="comment">%q3_cost = (1/(2*m))*sum(sqrErrors) ;</span>
+<span class="comment">%end</span>
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Question 3     Harikrishnan R N, 18CHE147
+% Here I have presented the code to solve question 3 of assignment
+%% Solving for First part: 
+% We will first define the arrays of given data : 
+% y is the array with the known values of ln(P) 
+y = [1;5;10;20;40;60;100;200;400;760] ; 
+ 
+% T is the array with the known temperature values (T in degC) ;
+T = [-36.7;-19.6;-11.5;-2.6;7.6;15.4;26.1;42.2;60.6;80.1];
+% There are 10 data points. To fit a polynomial, we should take care that
+% the polynomial is not overfitting the data. 
+% Let the degree of polynomials vary from 1 to 10
+warning('off','MATLAB:polyfit:PolyNotUnique')
+warning('off','MATLAB:polyfit:RepeatedPointsOrRescale')
+polys = zeros(6,1) ;
+disp('The plots for different fits on the data : ')
+hold on 
+plot(T,y)
+xlabel('Temperature, deg C')
+ylabel('log(P), P in mmHg')
+title('Fitting of polynomials of various degrees')
+lgd = legend('Given'); 
+lgd.Location = 'best';
+disp(['Since the number of data points is small, we will fit curves till degree = 6'])
+for deg = 1:length(polys)
+    p = polyfit(T,y,deg);
+    y_fit = polyval(p,T);
+    R2 = 1 - (sum((y-y_fit).^2))/(sum((y-mean(y)).^2));
+    plot(T,y_fit)
+    polys(deg) = R2;  
+end
+hold off
+i = 1:length(y) ; 
+T1 = table((1:length(polys))',polys,'VariableNames',{'Degree','R^2 Value'}); disp(T1)
+disp('The polynomial that fits the best is  of degree = 4')
+p_4 = polyfit(T,y,4); disp('The polynomial that fits the best is shown by : ')
+disp(['P = ',num2str(p_4(1)),'T^4 + ',num2str(p_4(2)),'T^3 + ',num2str(p_4(3)),'T^2 + ',num2str(p_4(4)),'T + ',num2str(p_4(5))])
+T2 = table(i',T,y,(polyval(p_4,T)),'VariableNames',{'Index','Temperature (degC)','P in mmHg','Predicted P in mmHg'});
+disp(T2); disp('It looks like 4th degree polynomial overfits the data, we can also use the 3rd degree for better predictions')
+
+%% Solving for Second part: 
+% Predicting values of Pressure with the help of liniar regression and
+% fitting the data to a Clausius Clapeyron equation.
+% I have used the gradient descent algorithm by hand coding it just to get 
+% the feel of it. We can use the MATLAB funciton linfit for the same.
+% We will first define the arrays of given data : 
+% y is the array with the known values of ln(P) 
+p = [1;5;10;20;40;60;100;200;400;760] ; 
+y = log(p) ; 
+% x_1 is the array with the known 1/temperature values (T in degC) ;
+T = [-36.7;-19.6;-11.5;-2.6;7.6;15.4;26.1;42.2;60.6;80.1];
+x_1 = 1./(T + 273.15) ; 
+% Now we will define the array of weights i.e A and B in our case
+beta0 = [20.1503;-4685.9579] ; 
+% We will define x as an array of ones and the 1/T terms : 
+m = ones(size(x_1)); 
+x = cat(2,m,x_1); 
+% Now we can define a prediction array predicting values of y 
+y_pred = x*beta0 ; 
+
+% Now we will use the cost function and the gradient descent algorithm :
+% Using multiple gradient descent more than once to increase computational
+% efficiency and accuracy. 
+disp('Part 2 : Regressing the Data on Clausius Clapeyron Equation :')
+alpha_1 = 1.9 ; n_1 = 1e4 ; 
+[beta_1,grad_1] = q3_grad_desc(x,y,beta0,alpha_1,n_1);
+disp('Values of A and B after 1st run of gradient descent: ')
+disp(['A = ',num2str(beta_1(1))]);
+disp(['B = ',num2str(beta_1(2))]);
+alpha_2 = 1.99 ; n_2 = 1e5 ;
+[beta_2,grad_2] = q3_grad_desc(x,y,beta0,alpha_2,n_2);
+disp('Values of A and B after 2nd run of gradient descent: ')
+disp(['A = ',num2str(beta_2(1))]);
+disp(['B = ',num2str(beta_2(2))]);
+alpha_3 = 1.99 ; n_3 = 10e6 ;
+[beta_3,grad_3] = q3_grad_desc(x,y,beta0,alpha_3,n_3);
+disp('Values of A and B after 2nd run of gradient descent: ')
+disp(['A = ',num2str(beta_3(1))]);
+disp(['B = ',num2str(beta_3(2))]);
+y_pred_new = x*beta_3 ; 
+disp('Here I have displayed the Given values of Pressure and Predicted values of Pressures');
+T3 = table(i',T,exp(y),exp(y_pred_new),'VariableNames',{'Index','Temperature (degC)','P in mmHg','Predicted P in mmHg'});
+disp(T3)
+R2 = 1 - (sum((y-y_pred_new).^2))/(sum((y-mean(y)).^2));
+disp(['The R^2 value for the fit is = ',num2str(R2)]);
+
+%% Solving for Third Part
+% Here we have to do a non-linear regression and fit the given data in 
+% Antoinne form of equation.
+% Here we store the given data the same way we did for linear regression
+% y is the array with the known values of ln(P) 
+p = [1;5;10;20;40;60;100;200;400;760] ; 
+y = log(p) ; 
+% x_1 is the array with the known 1/temperature values (T in degC) ;
+T = [-36.7;-19.6;-11.5;-2.6;7.6;15.4;26.1;42.2;60.6;80.1];
+% Now we will define the array of weights i.e A and B in our case
+beta0 = [20;4000;50] ; 
+% Here we use the nlinfit function to fit a non linear regression : 
+beta_nonlin = nlinfit(T,y,@(b,x) b(1) - b(2)./(x + b(3)),beta0);
+% Our Prediction for Pressure 
+y_pred_nonlin = beta_nonlin(1) - beta_nonlin(2)./(T + beta_nonlin(3))  ;  
+
+disp('Part 3 : Regressing the Data on Antoine Equation :')
+disp(['A = ',num2str(beta_nonlin(1))]);
+disp(['B = ',num2str(beta_nonlin(2))]);
+disp(['C = ',num2str(beta_nonlin(3))]);
+disp('Here I have displayed the Given values of Pressure and Predicted values of Pressures');
+T4 = table(i',T,exp(y),exp(y_pred_nonlin),'VariableNames',{'Index','Temperature (degC)','P in mmHg','Predicted P in mmHg'});
+disp(T3)
+R2 = 1 - (sum((y-y_pred_nonlin).^2))/(sum((y-mean(y)).^2));
+disp(['The R^2 value for the fit is = ',num2str(R2)]);
+
+%% Appendix 1 : Gradient Descent Function
+% Here I have showed how I have defined the function that can perform the 
+% Gradient Descent that is used to determine the Parameters in the 
+% Clausius Clapeyron Equation 
+% The function below has been "commented" for some reasons
+% Uncomment and save it in a file to use 
+%function [beta,q3_grad_desc] = q3_grad_desc(X,y,beta0,alpha,n)
+% The following function does the gradient descent needed to do the
+% regression 
+% alpha is the learning rate parameter
+% n is the number of iterations needed
+% Initialize some useful values
+%m = length(y); % number of training examples
+%q3_grad_desc = zeros(n, 1);
+
+%for iter = 1:n
+ %   delta = ((X*beta0)-y)' * X;
+  %  temp = beta0 - (alpha/m)*delta';
+   % beta0 = temp;
+    %q3_grad_desc(iter) = q3_cost(X, y, beta0);
+%end
+%beta = beta0;
+%end
+
+%% Appendix 2: Cost Function
+% Here I have attached the functionn that is used to compute the cost of 
+% the function as Mean Squared Error. 
+% The function below has been "commented" for some reasons
+% Uncomment and save it in a file to use 
+%function q3_cost = q3_cost(X,y,beta0)  
+% This function computes cost function
+% Initialize some useful values
+%m = length(y); % number of training examples
+%predictions = X*beta0;
+%sqrErrors = (predictions - y).^2 ; 
+%q3_cost = (1/(2*m))*sum(sqrErrors) ; 
+%end
+
+
+##### SOURCE END #####
+--></body></html>

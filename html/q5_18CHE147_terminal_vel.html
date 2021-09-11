@@ -1,0 +1,309 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Question 5 Harikrishnan R N, 18CHE147</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-11-22"><meta name="DC.source" content="q5_18CHE147_terminal_vel.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Question 5 Harikrishnan R N, 18CHE147</h1><!--introduction--><p>Calculation of Terminal Velocity</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Constants :</a></li><li><a href="#2">Functions Used :</a></li><li><a href="#3">Solving the First Part :</a></li><li><a href="#4">Solving for the Second Part :</a></li></ul></div><h2 id="1">Constants :</h2><p>Defining the constants used :</p><pre class="codeinput">g = 9.80665;  <span class="comment">% m/s^2, acceleration due to gravity</span>
+rhop = 1800;   <span class="comment">% kg/m^3 , Particle Density</span>
+rhof = 994.6; <span class="comment">% kg/m^3, Fluid Density</span>
+mu = 8.931e-4; <span class="comment">% kg/m-s, Fluid Viscosity</span>
+Dp = 0.208e-3;  <span class="comment">% m, Particle Diametere</span>
+T = 298.15;      <span class="comment">%  Kelvin, Temperature</span>
+const = rhof*Dp/mu; <span class="comment">% Constant used to calculate Re, Re = const*v</span>
+const1 = (4*g*(rhop-rhof)*Dp/3/rhof)^0.5 ;
+vt = 1 ;   <span class="comment">% m/s, Terminal velocity guess value</span>
+e = 1e-6   ;       <span class="comment">% Error Margin</span>
+</pre><h2 id="2">Functions Used :</h2><p>Below I have defined the Functions that I have used</p><pre class="codeinput">Re = @(v) const*v ; <span class="comment">% Reynolds Number</span>
+Cd_1 = @(v) 24/(const*v) ; <span class="comment">% Drag Coefficient for Re &lt; 0.1 ;</span>
+Cd_2 = @(v) (24/(const*v))*(1 + 0.14*((const*v)^0.7)); <span class="comment">% Drag Coefficient for 0.1 =&lt; Re =&lt; 1000 ;</span>
+Cd_3 = @(v) 0.44; <span class="comment">% Drag Coefficient for 1000 =&lt; Re =&lt; 350,000 ;</span>
+Cd_4 = @(v) 0.19 - (8e4)/(const*v); <span class="comment">% Drag Coefficient for Re &gt; 350,000 ;</span>
+v_t = @(Cd) const1*(Cd^-0.5) ; <span class="comment">% Terminal Velocity in terms of Drag Coefficient</span>
+</pre><h2 id="3">Solving the First Part :</h2><p>Here I have shown how to solve the first part :</p><p>I will run a loop where first we calculate the Reynolds Number with a guess value of vt. Using this we obtain a new value of vt and check if the guess value matches. If  not, we take the obtained vt as the guess value in the next loop.</p><p>The program will print the guess and obtained guess as the loop runs so that we can observe the convergance.</p><pre class="codeinput">i = 0; disp_vt = [vt]; disp_vtt = [0];
+<span class="keyword">while</span> true
+    Re_g = Re(vt) ;
+    <span class="keyword">if</span> Re_g &lt; 0.1
+            Cd = Cd_1(vt) ;
+
+    <span class="keyword">elseif</span> (Re_g &gt;= 0.1)||(Re_g &lt;= 1000)
+            Cd = Cd_2(vt) ;
+
+    <span class="keyword">elseif</span> (Re_g &lt;= 350000)||(Re_g &gt; 1000)
+            Cd = Cd_3(vt) ;
+
+    <span class="keyword">elseif</span> Re_g &gt; 350000
+            Cd = Cd_4(vt) ;
+    <span class="keyword">end</span>
+    vt_t = v_t(Cd);
+    disp_vt = [disp_vt;vt]; disp_vtt = [disp_vtt;vt_t];
+
+    <span class="keyword">if</span> abs(vt - vt_t) &lt; e
+        <span class="keyword">break</span>
+    <span class="keyword">else</span>
+        vt = vt_t;
+        i = i + 1;
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+ind = [0:i+1];
+T1 = table(ind',disp_vt,disp_vtt,<span class="string">'VariableNames'</span>,{<span class="string">'Iteration Number'</span>,<span class="string">'Guess Value'</span>,<span class="string">'Obtained Guess'</span>});
+disp(T1);
+disp([<span class="string">'The Terminal velocity is : '</span>,num2str(vt_t ),<span class="string">' m/s'</span>])
+disp([<span class="string">'The Reynolds Number is : '</span>,num2str(vt*const)])
+disp([<span class="string">'The Drag Coefficient is : '</span>,num2str(Cd)]);
+</pre><pre class="codeoutput">    Iteration Number    Guess Value    Obtained Guess
+    ________________    ___________    ______________
+
+            0                   1                0   
+            1                   1         0.053846   
+            2            0.053846         0.025084   
+            3            0.025084         0.018982   
+            4            0.018982         0.017008   
+            5            0.017008         0.016271   
+            6            0.016271          0.01598   
+            7             0.01598         0.015863   
+            8            0.015863         0.015815   
+            9            0.015815         0.015795   
+           10            0.015795         0.015787   
+           11            0.015787         0.015784   
+           12            0.015784         0.015783   
+           13            0.015783         0.015782   
+
+The Terminal velocity is : 0.015782 m/s
+The Reynolds Number is : 3.6559
+The Drag Coefficient is : 8.8422
+</pre><h2 id="4">Solving for the Second Part :</h2><p>Here we need to make a small change.</p><p>Instead of accelration due to gravity, our g changes from g to what is given i.e 30*g.</p><p>Redefining the functions to include the changes</p><pre class="codeinput">g_new = 30*g ;
+const2 = (4*g_new*(rhop-rhof)*Dp/3/rhof)^0.5 ;
+v_t_c = @(Cd) const2*(Cd^-0.5) ; <span class="comment">% Terminal Velocity in terms of Drag Coefficient with different g</span>
+<span class="comment">% Again solving as done before:</span>
+<span class="comment">% First Redefine the initial value of vt !!IMPORTANT!!</span>
+vt_c = 1;
+j = 0; disp_vtc = [vt_c]; disp_vttc = [0];
+<span class="keyword">while</span> true
+    Re_g = Re(vt_c) ;
+    <span class="keyword">if</span> Re_g &lt; 0.1
+            Cd = Cd_1(vt_c) ;
+
+    <span class="keyword">elseif</span> (Re_g &gt;= 0.1)||(Re_g &lt;= 1000)
+            Cd = Cd_2(vt_c) ;
+
+    <span class="keyword">elseif</span> (Re_g &lt;= 350000)||(Re_g &gt; 1000)
+            Cd = Cd_3(vt_c) ;
+
+    <span class="keyword">elseif</span> Re_g &gt; 350000
+            Cd = Cd_4(vt_c) ;
+    <span class="keyword">end</span>
+    vt_t_c = v_t_c(Cd);
+    disp_vtc = [disp_vtc;vt_c]; disp_vttc = [disp_vttc;vt_t_c];
+
+    <span class="keyword">if</span> abs(vt_c - vt_t_c) &lt; e
+        <span class="keyword">break</span>
+    <span class="keyword">else</span>
+        vt_c = vt_t_c;
+        j = j + 1;
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+ind = [0:j+1];
+T2 = table(ind',disp_vtc,disp_vttc,<span class="string">'VariableNames'</span>,{<span class="string">'Iteration Number'</span>,<span class="string">'Guess Value'</span>,<span class="string">'Obtained Guess'</span>});
+disp(T2);
+disp([<span class="string">'The Terminal velocity in Centrifugal Separator is : '</span>,num2str(vt_t_c ),<span class="string">' m/s'</span>])
+disp([<span class="string">'The Reynolds Number is : '</span>,num2str(vt_c*const)])
+disp([<span class="string">'The Drag Coefficient is : '</span>,num2str(Cd)])
+</pre><pre class="codeoutput">    Iteration Number    Guess Value    Obtained Guess
+    ________________    ___________    ______________
+
+            0                   1               0    
+            1                   1         0.29493    
+            2             0.29493         0.22566    
+            3             0.22566         0.21097    
+            4             0.21097         0.20731    
+            5             0.20731         0.20636    
+            6             0.20636         0.20611    
+            7             0.20611         0.20604    
+            8             0.20604         0.20603    
+            9             0.20603         0.20602    
+           10             0.20602         0.20602    
+           11             0.20602         0.20602    
+
+The Terminal velocity in Centrifugal Separator is : 0.20602 m/s
+The Reynolds Number is : 47.7227
+The Drag Coefficient is : 1.5566
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Question 5 Harikrishnan R N, 18CHE147 
+% Calculation of Terminal Velocity 
+%% Constants : 
+% Defining the constants used : 
+g = 9.80665;  % m/s^2, acceleration due to gravity 
+rhop = 1800;   % kg/m^3 , Particle Density 
+rhof = 994.6; % kg/m^3, Fluid Density
+mu = 8.931e-4; % kg/m-s, Fluid Viscosity 
+Dp = 0.208e-3;  % m, Particle Diametere
+T = 298.15;      %  Kelvin, Temperature
+const = rhof*Dp/mu; % Constant used to calculate Re, Re = const*v 
+const1 = (4*g*(rhop-rhof)*Dp/3/rhof)^0.5 ; 
+vt = 1 ;   % m/s, Terminal velocity guess value
+e = 1e-6   ;       % Error Margin
+%% Functions Used :
+% Below I have defined the Functions that I have used 
+Re = @(v) const*v ; % Reynolds Number 
+Cd_1 = @(v) 24/(const*v) ; % Drag Coefficient for Re < 0.1 ; 
+Cd_2 = @(v) (24/(const*v))*(1 + 0.14*((const*v)^0.7)); % Drag Coefficient for 0.1 =< Re =< 1000 ;
+Cd_3 = @(v) 0.44; % Drag Coefficient for 1000 =< Re =< 350,000 ;
+Cd_4 = @(v) 0.19 - (8e4)/(const*v); % Drag Coefficient for Re > 350,000 ;
+v_t = @(Cd) const1*(Cd^-0.5) ; % Terminal Velocity in terms of Drag Coefficient
+%% Solving the First Part : 
+% Here I have shown how to solve the first part : 
+%
+% I will run a loop where first we calculate the Reynolds Number with a
+% guess value of vt. Using this we obtain a new value of vt and check if
+% the guess value matches. If  not, we take the obtained vt as the guess
+% value in the next loop. 
+%
+% The program will print the guess and obtained
+% guess as the loop runs so that we can observe the convergance.
+i = 0; disp_vt = [vt]; disp_vtt = [0];
+while true
+    Re_g = Re(vt) ; 
+    if Re_g < 0.1 
+            Cd = Cd_1(vt) ;
+
+    elseif (Re_g >= 0.1)||(Re_g <= 1000)
+            Cd = Cd_2(vt) ;
+
+    elseif (Re_g <= 350000)||(Re_g > 1000)
+            Cd = Cd_3(vt) ; 
+
+    elseif Re_g > 350000
+            Cd = Cd_4(vt) ;
+    end  
+    vt_t = v_t(Cd);
+    disp_vt = [disp_vt;vt]; disp_vtt = [disp_vtt;vt_t]; 
+    
+    if abs(vt - vt_t) < e
+        break
+    else
+        vt = vt_t;
+        i = i + 1;
+    end
+end
+ind = [0:i+1];
+T1 = table(ind',disp_vt,disp_vtt,'VariableNames',{'Iteration Number','Guess Value','Obtained Guess'});
+disp(T1);
+disp(['The Terminal velocity is : ',num2str(vt_t ),' m/s'])
+disp(['The Reynolds Number is : ',num2str(vt*const)])
+disp(['The Drag Coefficient is : ',num2str(Cd)]);
+%% Solving for the Second Part : 
+% Here we need to make a small change.
+%
+% Instead of accelration due to
+% gravity, our g changes from g to what is given i.e 30*g. 
+%
+% Redefining the
+% functions to include the changes
+g_new = 30*g ; 
+const2 = (4*g_new*(rhop-rhof)*Dp/3/rhof)^0.5 ;
+v_t_c = @(Cd) const2*(Cd^-0.5) ; % Terminal Velocity in terms of Drag Coefficient with different g
+% Again solving as done before:
+% First Redefine the initial value of vt !!IMPORTANT!!
+vt_c = 1;
+j = 0; disp_vtc = [vt_c]; disp_vttc = [0];
+while true
+    Re_g = Re(vt_c) ; 
+    if Re_g < 0.1 
+            Cd = Cd_1(vt_c) ;
+
+    elseif (Re_g >= 0.1)||(Re_g <= 1000)
+            Cd = Cd_2(vt_c) ;
+
+    elseif (Re_g <= 350000)||(Re_g > 1000)
+            Cd = Cd_3(vt_c) ; 
+
+    elseif Re_g > 350000
+            Cd = Cd_4(vt_c) ;
+    end  
+    vt_t_c = v_t_c(Cd);
+    disp_vtc = [disp_vtc;vt_c]; disp_vttc = [disp_vttc;vt_t_c];
+    
+    if abs(vt_c - vt_t_c) < e
+        break
+    else
+        vt_c = vt_t_c;
+        j = j + 1;
+    end
+end
+ind = [0:j+1];
+T2 = table(ind',disp_vtc,disp_vttc,'VariableNames',{'Iteration Number','Guess Value','Obtained Guess'});
+disp(T2);
+disp(['The Terminal velocity in Centrifugal Separator is : ',num2str(vt_t_c ),' m/s'])
+disp(['The Reynolds Number is : ',num2str(vt_c*const)])
+disp(['The Drag Coefficient is : ',num2str(Cd)])
+
+
+    
+
+##### SOURCE END #####
+--></body></html>

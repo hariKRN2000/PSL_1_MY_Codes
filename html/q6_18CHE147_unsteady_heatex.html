@@ -1,0 +1,196 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Question 6 Harikrishnan R N, 18CHE147</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-11-22"><meta name="DC.source" content="q6_18CHE147_unsteady_heatex.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Question 6 Harikrishnan R N, 18CHE147</h1><!--introduction--><p>Here I have showed how to solve the  5th question given in the assignment</p><p>Here we need to solve system of ODEs simultenously.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Defining Constants and Arrays:</a></li><li><a href="#2">Defining the Function used to solve ODEs :</a></li><li><a href="#3">Solving the ODEs :</a></li><li><a href="#4">Analysing the data :</a></li></ul></div><h2 id="1">Defining Constants and Arrays:</h2><p>Here we will define all the constants required and the required arrays</p><p>Any changes needed to make in the values of constants can be made from here</p><pre class="codeinput">W = 100 ;   <span class="comment">% kg/min, Mass flowrates in the tanks</span>
+M = 1000;   <span class="comment">% kg, Mass of oil in each tank</span>
+UA = 10 ; <span class="comment">% kJ/min-degC , Product of Heat transfer coefficient and area of the coil</span>
+            <span class="comment">% of the coil for each tank .</span>
+Cp = 2;   <span class="comment">% kJ/kg, Heat capacity of oil</span>
+n = 3  ;    <span class="comment">% Number of tanks</span>
+n_steps = 1e4 ; <span class="comment">% Number of time steps you want to solve for</span>
+t_tot = 90; <span class="comment">% User total amount of time over which equations</span>
+              <span class="comment">% are being solved</span>
+t_step = t_tot/n_steps; <span class="comment">% Length of one time step</span>
+Ts = 250+273.16; <span class="comment">% Temperature of Incoming Steam</span>
+T0 = (20+273.16) ; <span class="comment">% Initial Temperature condition in each tank</span>
+</pre><h2 id="2">Defining the Function used to solve ODEs :</h2><p>Here I will define a function that returns the Array of ODEs that can be solved using an ODE solver</p><pre class="codeinput"><span class="comment">%T(1),T(2),T(3) stand for temperature in respective tanks</span>
+dydt = @(t,T,~) [ ((W*Cp*(T0-T(1)))+(UA*(Ts-T(1))))/(M*Cp); <span class="comment">% First tank</span>
+                  ((W*Cp*(T(1)-T(2)))+(UA*(Ts-T(2))))/(M*Cp); <span class="comment">% Second tank</span>
+                  ((W*Cp*(T(2)-T(3)))+(UA*(Ts-T(3))))/(M*Cp);]; <span class="comment">% Third tank</span>
+</pre><h2 id="3">Solving the ODEs :</h2><p>Here I will show how to solve the ODEs using the ode15s solver and how to plot the graphs</p><pre class="codeinput">T_in = T0*ones(n,1) ;
+tspan = linspace(0,t_tot,n_steps); <span class="comment">% To use in ode45 solver</span>
+<span class="comment">%t_span = [0 90] ; % If u want to use ode15s solver</span>
+[t,T] = ode45(@(t,T) dydt(t,T),tspan,T_in) ;
+<span class="comment">%[t,T] = ode15s(@(t,T) dydt(t,T),t_span,T_in) ;</span>
+figure
+plot(t,T-273.16)
+title({<span class="string">'Variation Temperature of oil in tanks with time'</span>;<span class="string">'Harikrishnan R N, 18CHE147'</span>});
+xlabel(<span class="string">'Time, min'</span>); ylabel(<span class="string">'Temperature, Kelvin'</span>)
+legend(<span class="string">'Tank 1'</span>,<span class="string">'Tank 2'</span>,<span class="string">'Tank 3'</span>,<span class="string">'Location'</span>,<span class="string">'best'</span>)
+</pre><img vspace="5" hspace="5" src="q6_18CHE147_unsteady_heatex_01.png" alt=""> <h2 id="4">Analysing the data :</h2><p>Here I will show how I extracted the required temperatures and time.</p><pre class="codeinput"><span class="comment">%Solving for finding the steady state Temperatures;</span>
+Fs = @(T,~)    [ ((W*Cp*(T0-T(1)))+(UA*(Ts-T(1))))/(M*Cp); <span class="comment">% First tank</span>
+                  ((W*Cp*(T(1)-T(2)))+(UA*(Ts-T(2))))/(M*Cp); <span class="comment">% Second tank</span>
+                  ((W*Cp*(T(2)-T(3)))+(UA*(Ts-T(3))))/(M*Cp);]; <span class="comment">% Third tank</span>
+T_0 = [30+273.16 ; 40+273.16 ; 50+273.16];
+T_sol = fsolve(Fs,T_0);
+T1 = T_sol(1) ; T2 = T_sol(2); T3 = T_sol(3); Ts = [T1;T2;T3];
+T3s = (99/100)*T3 ;
+i = 1 ;
+<span class="keyword">while</span> ( 0.99*(T3-273.16) &gt; (T(i,3)-273.16))
+    i = i + 1;
+<span class="keyword">end</span>
+
+disp(<span class="string">'The steady state temperatures are : '</span>)
+Tab = table([1:1:n]',Ts-273.16,<span class="string">'VariableNames'</span>,{<span class="string">'Tank number'</span>,<span class="string">'Steady State Temperature, degC'</span>});
+disp(Tab)
+disp([<span class="string">'Time required to acheive 99% of the Steady State Temperature in Tank 3 = '</span>,num2str(t(i,1)),<span class="string">' minutes'</span>])
+</pre><pre class="codeoutput">
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+The steady state temperatures are : 
+    Tank number    Steady State Temperature, degC
+    ___________    ______________________________
+
+         1                     30.952            
+         2                     41.383            
+         3                     51.317            
+
+Time required to acheive 99% of the Steady State Temperature in Tank 3 = 63.0153 minutes
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Question 6 Harikrishnan R N, 18CHE147
+% 
+% Here I have showed how to solve the  5th question given in the assignment
+%
+% Here we need to solve system of ODEs simultenously. 
+%% Defining Constants and Arrays: 
+% Here we will define all the constants required and the required arrays
+%  
+% Any changes needed to make in the values of constants can be made from
+% here
+W = 100 ;   % kg/min, Mass flowrates in the tanks 
+M = 1000;   % kg, Mass of oil in each tank 
+UA = 10 ; % kJ/min-degC , Product of Heat transfer coefficient and area of the coil
+            % of the coil for each tank .
+Cp = 2;   % kJ/kg, Heat capacity of oil
+n = 3  ;    % Number of tanks 
+n_steps = 1e4 ; % Number of time steps you want to solve for 
+t_tot = 90; % User total amount of time over which equations 
+              % are being solved 
+t_step = t_tot/n_steps; % Length of one time step
+Ts = 250+273.16; % Temperature of Incoming Steam
+T0 = (20+273.16) ; % Initial Temperature condition in each tank 
+%% Defining the Function used to solve ODEs : 
+% Here I will define a function that returns the Array of ODEs that can be 
+% solved using an ODE solver 
+%T(1),T(2),T(3) stand for temperature in respective tanks 
+dydt = @(t,T,~) [ ((W*Cp*(T0-T(1)))+(UA*(Ts-T(1))))/(M*Cp); % First tank
+                  ((W*Cp*(T(1)-T(2)))+(UA*(Ts-T(2))))/(M*Cp); % Second tank
+                  ((W*Cp*(T(2)-T(3)))+(UA*(Ts-T(3))))/(M*Cp);]; % Third tank
+%% Solving the ODEs : 
+% Here I will show how to solve the ODEs using the ode15s solver and how to 
+% plot the graphs
+T_in = T0*ones(n,1) ; 
+tspan = linspace(0,t_tot,n_steps); % To use in ode45 solver
+%t_span = [0 90] ; % If u want to use ode15s solver
+[t,T] = ode45(@(t,T) dydt(t,T),tspan,T_in) ; 
+%[t,T] = ode15s(@(t,T) dydt(t,T),t_span,T_in) ;
+figure
+plot(t,T-273.16)
+title({'Variation Temperature of oil in tanks with time';'Harikrishnan R N, 18CHE147'});
+xlabel('Time, min'); ylabel('Temperature, Kelvin')
+legend('Tank 1','Tank 2','Tank 3','Location','best')
+%% Analysing the data : 
+% Here I will show how I extracted the required temperatures and time.
+%Solving for finding the steady state Temperatures; 
+Fs = @(T,~)    [ ((W*Cp*(T0-T(1)))+(UA*(Ts-T(1))))/(M*Cp); % First tank
+                  ((W*Cp*(T(1)-T(2)))+(UA*(Ts-T(2))))/(M*Cp); % Second tank
+                  ((W*Cp*(T(2)-T(3)))+(UA*(Ts-T(3))))/(M*Cp);]; % Third tank
+T_0 = [30+273.16 ; 40+273.16 ; 50+273.16];
+T_sol = fsolve(Fs,T_0); 
+T1 = T_sol(1) ; T2 = T_sol(2); T3 = T_sol(3); Ts = [T1;T2;T3];
+T3s = (99/100)*T3 ; 
+i = 1 ;
+while ( 0.99*(T3-273.16) > (T(i,3)-273.16))
+    i = i + 1;
+end
+ 
+disp('The steady state temperatures are : ')
+Tab = table([1:1:n]',Ts-273.16,'VariableNames',{'Tank number','Steady State Temperature, degC'});
+disp(Tab)
+disp(['Time required to acheive 99% of the Steady State Temperature in Tank 3 = ',num2str(t(i,1)),' minutes'])    
+
+
+
+##### SOURCE END #####
+--></body></html>

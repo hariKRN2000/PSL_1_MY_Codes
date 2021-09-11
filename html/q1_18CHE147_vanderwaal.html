@@ -1,0 +1,169 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Question 1, Harikrishnan R N, 18CHE147</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-11-22"><meta name="DC.source" content="q1_18CHE147_vanderwaal.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Question 1, Harikrishnan R N, 18CHE147</h1><!--introduction--><p>Here I will show how to solve question 1 of the assignment by solving the cubic equation of van der waal EOS</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Defining Constants</a></li><li><a href="#2">Finding the molar volume (First bit) :</a></li><li><a href="#3">Solving for the Second Bit:</a></li><li><a href="#4">Solving for the Third bit :</a></li></ul></div><h2 id="1">Defining Constants</h2><p>Here we define the constants, physical constants of components:</p><pre class="codeinput"><span class="comment">%Enter the Parameters Below :</span>
+P_atm = 56;         <span class="comment">% Pressure in atm units</span>
+P = P_atm*101325;   <span class="comment">% Pressure in Pa units</span>
+T = 450;            <span class="comment">% Temperature in K units</span>
+Tc = 405.5;         <span class="comment">% Critical Temperature in K units</span>
+Pc_atm = 111.3;     <span class="comment">% Critical Pressure in atm units</span>
+Pc = Pc_atm*101325; <span class="comment">% Critical Pressure in Pa units</span>
+R = 8.3144621;      <span class="comment">% Universal Gas constans J/gmol-K</span>
+<span class="comment">% Defining the Van der waal parameters a and b below :</span>
+a = (27/64)*R*R*Tc*Tc/Pc ;
+b = (1/8)*R*Tc/Pc;
+</pre><h2 id="2">Finding the molar volume (First bit) :</h2><p>Here we will see how th molar Volume is found:</p><pre class="codeinput">p = [P -(R*T + P*b) a -a*b];
+V = roots(p) ;
+disp([ <span class="string">'1. '</span>,<span class="string">'The Molar Volume of Gas is = '</span>, num2str(max(V)),<span class="string">' m^3/gmol'</span>]);
+disp([ <span class="string">'   '</span>,<span class="string">'The Compressibility factor of Gas is = '</span>, num2str(P*max(V)/R/T)]);
+</pre><pre class="codeoutput">1. The Molar Volume of Gas is = 0.00057487 m^3/gmol
+   The Compressibility factor of Gas is = 0.87183
+</pre><h2 id="3">Solving for the Second Bit:</h2><pre class="codeinput">Pr = [1 2 4 10 20] ;
+<span class="keyword">for</span> i = Pr
+    P_i = Pc*i ;
+    p = [P_i -(R*T + P_i*b) a -a*b];
+    V = roots(p) ;
+    disp([ <span class="string">'2. '</span>,<span class="string">'The Molar Volume of Gas is = '</span>, num2str(max(real(V))),<span class="string">' m^3/gmol'</span>,<span class="string">' for Pr ='</span>, num2str(i)]);
+    disp([ <span class="string">'   '</span>,<span class="string">'The Compressibility factor of Gas is = '</span>, num2str(P_i*max(real(V))/R/T)]);
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">2. The Molar Volume of Gas is = 0.0002335 m^3/gmol for Pr =1
+   The Compressibility factor of Gas is = 0.70381
+2. The Molar Volume of Gas is = 7.7265e-05 m^3/gmol for Pr =2
+   The Compressibility factor of Gas is = 0.46578
+2. The Molar Volume of Gas is = 6.0652e-05 m^3/gmol for Pr =4
+   The Compressibility factor of Gas is = 0.73126
+2. The Molar Volume of Gas is = 5.0874e-05 m^3/gmol for Pr =10
+   The Compressibility factor of Gas is = 1.5334
+2. The Molar Volume of Gas is = 4.6174e-05 m^3/gmol for Pr =20
+   The Compressibility factor of Gas is = 2.7835
+</pre><h2 id="4">Solving for the Third bit :</h2><p>To show variation of compressibility factor with Pr, we can plot them :</p><pre class="codeinput">Z_all = zeros(size(Pr));
+j = 1;
+<span class="keyword">for</span> i = Pr
+    P_i = Pc*i ;
+    p = [P_i -(R*T + P_i*b) a -a*b];
+    V = roots(p) ;
+    Z_all(j) = P_i*max(real((V)))/R/T;
+    j =j + 1;
+<span class="keyword">end</span>
+disp( <span class="string">"3. Program will print the plot..."</span> );
+plot(Pr, Z_all);
+title([<span class="string">" Variation of Z with Pr "</span> ; <span class="string">" Harikrishnan R N"</span>]);
+xlabel( <span class="string">" Pr "</span>) ; ylabel(<span class="string">" Z "</span>) ;
+</pre><pre class="codeoutput">3. Program will print the plot...
+</pre><img vspace="5" hspace="5" src="q1_18CHE147_vanderwaal_01.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Question 1, Harikrishnan R N, 18CHE147
+% Here I will show how to solve question 1 of the assignment by solving the
+% cubic equation of van der waal EOS
+%% Defining Constants
+% Here we define the constants, physical constants of components: 
+%Enter the Parameters Below : 
+P_atm = 56;         % Pressure in atm units
+P = P_atm*101325;   % Pressure in Pa units
+T = 450;            % Temperature in K units
+Tc = 405.5;         % Critical Temperature in K units
+Pc_atm = 111.3;     % Critical Pressure in atm units
+Pc = Pc_atm*101325; % Critical Pressure in Pa units
+R = 8.3144621;      % Universal Gas constans J/gmol-K
+% Defining the Van der waal parameters a and b below : 
+a = (27/64)*R*R*Tc*Tc/Pc ; 
+b = (1/8)*R*Tc/Pc; 
+%% Finding the molar volume (First bit) : 
+% Here we will see how th molar Volume is found:
+p = [P -(R*T + P*b) a -a*b]; 
+V = roots(p) ;
+disp([ '1. ','The Molar Volume of Gas is = ', num2str(max(V)),' m^3/gmol']);
+disp([ '   ','The Compressibility factor of Gas is = ', num2str(P*max(V)/R/T)]);
+%% Solving for the Second Bit: 
+Pr = [1 2 4 10 20] ; 
+for i = Pr
+    P_i = Pc*i ; 
+    p = [P_i -(R*T + P_i*b) a -a*b];
+    V = roots(p) ;
+    disp([ '2. ','The Molar Volume of Gas is = ', num2str(max(real(V))),' m^3/gmol',' for Pr =', num2str(i)]);
+    disp([ '   ','The Compressibility factor of Gas is = ', num2str(P_i*max(real(V))/R/T)]);
+end
+
+%% Solving for the Third bit : 
+% To show variation of compressibility factor with Pr, we can plot them : 
+Z_all = zeros(size(Pr));
+j = 1;
+for i = Pr
+    P_i = Pc*i ; 
+    p = [P_i -(R*T + P_i*b) a -a*b];
+    V = roots(p) ;
+    Z_all(j) = P_i*max(real((V)))/R/T;
+    j =j + 1;
+end
+disp( "3. Program will print the plot..." );
+plot(Pr, Z_all);
+title([" Variation of Z with Pr " ; " Harikrishnan R N"]);
+xlabel( " Pr ") ; ylabel(" Z ") ; 
+##### SOURCE END #####
+--></body></html>
